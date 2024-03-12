@@ -1,0 +1,14 @@
+type Query {
+    game(id: String!): Game
+    games(id: String): [Game]
+}
+
+scalar Long
+
+type Game {
+    id: String
+    status: String
+    version: Long
+    newBettingSystem: Boolean
+    type: String
+}

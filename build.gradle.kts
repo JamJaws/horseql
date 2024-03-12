@@ -25,6 +25,12 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:latest.release")
+	}
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-cache")
@@ -32,6 +38,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter")
+	implementation("com.netflix.graphql.dgs:graphql-dgs-extended-scalars")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -48,8 +56,6 @@ tasks.withType<Test> {
 }
 
 tasks.generateJava {
-	schemaPaths.add("${projectDir}/src/main/resources/graphql-client")
+	schemaPaths.add("${projectDir}/src/main/resources/schema")
 	packageName = "com.jamjaws.horseql.codegen"
-	generateClient = true
 }
-
