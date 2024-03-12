@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class HorseQlApplication
+class HorseQLApplication
 
 fun main(args: Array<String>) {
-	runApplication<HorseQlApplication>(*args)
+	runApplication<HorseQLApplication>(*args)
 }
