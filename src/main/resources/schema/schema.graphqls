@@ -69,6 +69,8 @@ type RaceHorse {
     foreignOwned: Boolean
     homeTrack: HomeTrack
     results: [Result]
+    father: Horse
+    mother: Horse
 }
 
 type Record {

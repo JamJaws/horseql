@@ -2,6 +2,7 @@ package com.jamjaws.horseql.fetcher
 
 import com.jamjaws.horseql.codegen.DgsConstants
 import com.jamjaws.horseql.codegen.types.Horse
+import com.jamjaws.horseql.codegen.types.RaceHorse
 import com.jamjaws.horseql.service.TravsportService
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsData
@@ -21,24 +22,40 @@ class HorseFetcher(
     @DgsData(parentType = DgsConstants.HORSE.TYPE_NAME)
     fun mother(dfe: DataFetchingEnvironment): Horse? {
         val horse = dfe.getSource<Horse>()
-        return horse.id
-            ?.let(travsportService::getHorsePedigree)
+        return horse.id?.let(::getMother)
+    }
+
+    @DgsData(parentType = DgsConstants.RACEHORSE.TYPE_NAME, field = DgsConstants.RACEHORSE.Mother)
+    fun raceMother(dfe: DataFetchingEnvironment): Horse? {
+        val horse = dfe.getSource<RaceHorse>()
+        return horse.id?.let(::getMother)
+    }
+
+    private fun getMother(horseId: Long): Horse? =
+        travsportService.getHorsePedigree(horseId)
             ?.mother
             ?.horseId
             ?.let(travsportService::getHorseBasicInformation)
             ?.let { Horse(it.id, it.name) }
-    }
 
     @DgsData(parentType = DgsConstants.HORSE.TYPE_NAME)
     fun father(dfe: DataFetchingEnvironment): Horse? {
         val horse = dfe.getSource<Horse>()
-        return horse.id
-            ?.let(travsportService::getHorsePedigree)
+        return horse.id?.let(::getFather)
+    }
+
+    @DgsData(parentType = DgsConstants.RACEHORSE.TYPE_NAME, field = DgsConstants.RACEHORSE.Father)
+    fun raceFather(dfe: DataFetchingEnvironment): Horse? {
+        val horse = dfe.getSource<RaceHorse>()
+        return horse.id?.let(::getFather)
+    }
+
+    private fun getFather(horseId: Long): Horse? =
+        travsportService.getHorsePedigree(horseId)
             ?.father
             ?.horseId
             ?.let(travsportService::getHorseBasicInformation)
             ?.let { Horse(it.id, it.name) }
-    }
 
     @DgsData(parentType = DgsConstants.HORSE.TYPE_NAME)
     fun siblings(dfe: DataFetchingEnvironment): List<Horse>? {
