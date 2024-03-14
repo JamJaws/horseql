@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: HorseQL
+horseql:
+  racinginfo:
+    protocol: https
+    host: www.atg.se
+    port: 443

@@ -1,6 +1,5 @@
 type Query {
     game(id: String!): Game
-    games(id: String): [Game]
 }
 
 scalar Long
@@ -9,6 +8,12 @@ type Game {
     id: String
     status: String
     version: Long
+    races: [Race],
     newBettingSystem: Boolean
-    type: String
+    type: String,
+}
+
+type Race {
+    id: String
+    name: String
 }
