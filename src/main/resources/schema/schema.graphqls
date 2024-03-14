@@ -67,6 +67,7 @@ type Horse {
     # pedigree: Pedigree
     # foreignOwned: Boolean?
     homeTrack: HomeTrack
+    results: [Result]
 }
 
 type Record {
@@ -153,4 +154,9 @@ type Driver {
     silks: String
     homeTrack: HomeTrack,
     # statistics: Statistics3?,
+}
+
+type Result {
+    date: String
+    place: String
 }

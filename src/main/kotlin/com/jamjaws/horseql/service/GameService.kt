@@ -9,6 +9,7 @@ import com.jamjaws.horseql.codegen.types.Owner
 import com.jamjaws.horseql.codegen.types.Race
 import com.jamjaws.horseql.codegen.types.Record
 import com.jamjaws.horseql.codegen.types.RecordTime
+import com.jamjaws.horseql.codegen.types.Result
 import com.jamjaws.horseql.codegen.types.Shoes
 import com.jamjaws.horseql.codegen.types.ShoesFrontBack
 import com.jamjaws.horseql.codegen.types.Start
@@ -18,19 +19,25 @@ import com.jamjaws.horseql.codegen.types.SulkyType
 import com.jamjaws.horseql.codegen.types.Track
 import com.jamjaws.horseql.codegen.types.Trainer
 import com.jamjaws.horseql.integration.racinginfo.model.RacingInfoGame
+import com.jamjaws.horseql.integration.racinginfo.model.start.RacingInfoStart
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.WebClientResponseException
+import reactor.core.publisher.Mono
 
 @Service
 class GameService(private val webClient: WebClient) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable("game")
+    @Cacheable("getGame")
     fun getGame(id: String): Game? {
         log.info("get racing info game $id")
-        return webClient.get().uri("/v1/api/games/$id").retrieve().bodyToMono(RacingInfoGame::class.java).block()
+        return webClient.get().uri("/v1/api/games/$id").retrieve()
+            .bodyToMono(RacingInfoGame::class.java)
+            .onErrorResume(WebClientResponseException.NotFound::class.java) { notFound -> Mono.empty() }
+            .block()
             ?.let { game ->
                 Game(
                     game.id,
@@ -178,6 +185,16 @@ class GameService(private val webClient: WebClient) {
                     game.type,
                 )
             }
+    }
+
+    @Cacheable("getHorseResults")
+    fun getHorseResults(raceId: String, startNumber: Long): List<Result> {
+        log.info("$raceId - $startNumber")
+        val start = webClient.get().uri("/v1/api/races/$raceId/start/$startNumber").retrieve()
+            .bodyToMono(RacingInfoStart::class.java).block()
+        return start?.horse?.results?.records?.map {
+            Result(it.date, it.place)
+        }.orEmpty()
     }
 
 }

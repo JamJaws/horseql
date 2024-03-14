@@ -341,7 +341,7 @@ data class Record4(
     val code: String,
     val startMethod: String,
     val distance: String,
-    val time: Time4,
+    val time: Time,
     val place: Long,
     val year: String,
 )
