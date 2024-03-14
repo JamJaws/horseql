@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono
 class TravsportService(@Qualifier("webClientTravsport") private val webClient: WebClient) {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    @Cacheable("getHorseBasicInformation")
+    @Cacheable("getHorseBasicInformation", cacheManager = "longTimeCacheManager")
     fun getHorseBasicInformation(id: Long): TravsportHorse? {
         log.info("get horse basic information for id: $id")
         return webClient.get().uri("/horses/basicinformation/organisation/TROT/sourceofdata/SPORT/horseid/$id")
@@ -26,7 +26,7 @@ class TravsportService(@Qualifier("webClientTravsport") private val webClient: W
             .block()
     }
 
-    @Cacheable("getHorsePedigree")
+    @Cacheable("getHorsePedigree", cacheManager = "longTimeCacheManager")
     fun getHorsePedigree(id: Long): TravsportPedigree? {
         log.info("get horse pedigree for id: $id")
         return webClient.get()
@@ -37,7 +37,7 @@ class TravsportService(@Qualifier("webClientTravsport") private val webClient: W
             .block()
     }
 
-    @Cacheable("getHorseOffspring")
+    @Cacheable("getHorseOffspring", cacheManager = "longTimeCacheManager")
     fun getHorseOffspring(id: Long, genderCode: String): TravsportOffspring? {
         log.info("get horse offspring for id: $id")
         return webClient.get()
