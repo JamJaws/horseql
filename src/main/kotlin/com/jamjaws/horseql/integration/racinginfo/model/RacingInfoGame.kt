@@ -198,8 +198,8 @@ data class Placement2(
 
 data class Shoes(
     val reported: Boolean,
-    val front: Front,
-    val back: Back,
+    val front: Front?,
+    val back: Back?,
 )
 
 data class Front(
@@ -214,7 +214,7 @@ data class Back(
 
 data class Sulky(
     val reported: Boolean,
-    val type: Type,
+    val type: Type?,
     val colour: Colour,
 )
 

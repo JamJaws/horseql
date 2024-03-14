@@ -16,4 +16,141 @@ type Game {
 type Race {
     id: String
     name: String
+    date: String
+    number: Long
+    distance: Long
+    startMethod: String
+    startTime: String
+    scheduledStartTime: String
+    prize: String
+    terms: [String]
+    sport: String
+    track: Track
+    status: String
+    # pools: Pools
+    starts: [Start]
+    # mergedPools: [MergedPool],
+}
+
+type Track {
+    id: Long
+    name: String
+    condition: String
+    countryCode: String
+}
+
+type Start {
+    id: String,
+    number: Long
+    postPosition: Long
+    distance: Long
+    horse: Horse
+    driver: Driver
+    scratched: Boolean
+}
+
+type Horse {
+    id: Long,
+    name: String
+    nationality: String
+    age: Long
+    sex: String
+    record: Record
+    trainer: Trainer
+    shoes: Shoes
+    sulky: Sulky
+    money: Long
+    color: String
+    owner: Owner
+    breeder: Breeder
+    # statistics: Statistics2
+    # pedigree: Pedigree
+    # foreignOwned: Boolean?
+    homeTrack: HomeTrack
+}
+
+type Record {
+    code: String
+    startMethod: String
+    distance: String
+    time: RecordTime
+}
+
+type RecordTime {
+    minutes: Long
+    seconds: Long
+    tenths: Long
+}
+
+type Trainer {
+    id: Long,
+    firstName: String
+    lastName: String
+    shortName: String
+    location: String
+    birth: Long
+    license: String
+    silks: String
+    homeTrack: HomeTrack
+    #    statistics: Statistics
+}
+
+type Shoes {
+    reported: Boolean,
+    front: ShoesFrontBack,
+    back: ShoesFrontBack,
+}
+
+type ShoesFrontBack {
+    hasShoe: Boolean
+    changed: Boolean
+}
+
+type Sulky {
+    reported: Boolean
+    type: SulkyType
+    colour: SulkyColour
+}
+
+type SulkyType {
+    code: String
+    text: String
+    engText: String
+    changed: Boolean
+}
+type SulkyColour {
+    code: String
+    text: String
+    engText: String
+    changed: Boolean
+}
+
+type Owner {
+    id: Long
+    name: String
+    location: String
+}
+
+type Breeder {
+    id: Long
+    name: String
+    location: String
+}
+
+type HomeTrack {
+    id: Long
+    name: String
+}
+
+type Driver {
+    id: Long
+    firstName: String
+    lastName: String
+    shortName: String
+    location: String
+    birth: Long
+    license: String
+    silks: String
+    homeTrack: HomeTrack,
+    # statistics: Statistics3?,
 }

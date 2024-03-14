@@ -62,12 +62,44 @@ class GameFetcherTest(
         val version: Long = dgsQueryExecutor.executeAndExtractJsonPath(
             """
                 {
-                    game(id: "V86_2024-03-13_40_1") {
-                        version
-                    }
+                  game(id: "V86_2024-03-13_40_1") {
+                    version
+                  }
                 }
             """.trimIndent(), "data.game.version"
         )
         version shouldBe 1710334391413
+    }
+
+    @Test
+    fun `get firstName of first start in first leg`() {
+        val firstName: String = dgsQueryExecutor.executeAndExtractJsonPath(
+            """
+                {
+                  game(id: "V86_2024-03-13_40_1") {
+                    id
+                    races {
+                      id
+                      track {
+                        id
+                        name
+                      }
+                      starts {
+                        id
+                        horse {
+                          id
+                        }
+                        driver {
+                          id
+                          firstName
+                          lastName
+                        }
+                      }
+                    }
+                  }
+                }
+            """.trimIndent(), "data.game.races[0].starts[0].driver.firstName"
+        )
+        firstName shouldBe "Tor A"
     }
 }
