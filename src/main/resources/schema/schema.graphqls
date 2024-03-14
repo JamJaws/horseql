@@ -1,5 +1,6 @@
 type Query {
     game(id: String!): Game
+    horse(id: Long!): Horse
 }
 
 scalar Long
@@ -44,12 +45,12 @@ type Start {
     number: Long
     postPosition: Long
     distance: Long
-    horse: Horse
+    horse: RaceHorse
     driver: Driver
     scratched: Boolean
 }
 
-type Horse {
+type RaceHorse {
     id: Long,
     name: String
     nationality: String
@@ -64,8 +65,8 @@ type Horse {
     owner: Owner
     breeder: Breeder
     # statistics: Statistics2
-    # pedigree: Pedigree
-    # foreignOwned: Boolean?
+    #    pedigree: Pedigree
+    foreignOwned: Boolean
     homeTrack: HomeTrack
     results: [Result]
 }
@@ -119,6 +120,7 @@ type SulkyType {
     engText: String
     changed: Boolean
 }
+
 type SulkyColour {
     code: String
     text: String
@@ -159,4 +161,17 @@ type Driver {
 type Result {
     date: String
     place: String
+}
+
+#type Pedigree {
+#    father: AnotherHorse
+#    mother: AnotherHorse
+#}
+
+type Horse {
+    id: Long
+    name: String
+    father: Horse
+    mother: Horse
+    siblings: [Horse]
 }

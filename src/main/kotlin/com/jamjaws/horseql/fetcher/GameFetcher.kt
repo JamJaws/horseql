@@ -39,7 +39,7 @@ class GameFetcher(
 
     data class HorseStart(val horseId: Long, val raceId: String, val startNumber: Long)
 
-    @DgsData(parentType = DgsConstants.HORSE.TYPE_NAME)
+    @DgsData(parentType = DgsConstants.RACEHORSE.TYPE_NAME)
     fun results(dfe: DataFetchingEnvironment): List<Result> {
         val source = dfe.getSource<Horse>()
         val localContext = dfe.getLocalContext<GameQueryContext>()

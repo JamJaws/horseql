@@ -4,9 +4,9 @@ import com.jamjaws.horseql.codegen.types.Breeder
 import com.jamjaws.horseql.codegen.types.Driver
 import com.jamjaws.horseql.codegen.types.Game
 import com.jamjaws.horseql.codegen.types.HomeTrack
-import com.jamjaws.horseql.codegen.types.Horse
 import com.jamjaws.horseql.codegen.types.Owner
 import com.jamjaws.horseql.codegen.types.Race
+import com.jamjaws.horseql.codegen.types.RaceHorse
 import com.jamjaws.horseql.codegen.types.Record
 import com.jamjaws.horseql.codegen.types.RecordTime
 import com.jamjaws.horseql.codegen.types.Result
@@ -72,7 +72,7 @@ class GameService(private val webClient: WebClient) {
                                     postPosition = start.postPosition,
                                     distance = start.distance,
                                     horse = start.horse?.let { horse ->
-                                        Horse(
+                                        RaceHorse(
                                             id = horse.id,
                                             name = horse.name,
                                             nationality = horse.nationality,
@@ -156,6 +156,7 @@ class GameService(private val webClient: WebClient) {
                                                     location = breeder.location,
                                                 )
                                             },
+                                            foreignOwned = horse.foreignOwned,
                                             homeTrack = horse.homeTrack?.let { homeTrack ->
                                                 HomeTrack(
                                                     id = homeTrack.id,
