@@ -5,6 +5,7 @@ import com.jamjaws.horseql.integration.travsport.model.offspring.TravsportOffspr
 import com.jamjaws.horseql.integration.travsport.model.pedigree.TravsportPedigree
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.WebClientResponseException
@@ -14,6 +15,8 @@ import reactor.core.publisher.Mono
 @Service
 class TravsportService(@Qualifier("webClientTravsport") private val webClient: WebClient) {
     private val log = LoggerFactory.getLogger(javaClass)
+
+    @Cacheable("getHorseBasicInformation")
     fun getHorseBasicInformation(id: Long): TravsportHorse? {
         log.info("get horse basic information for id: $id")
         return webClient.get().uri("/horses/basicinformation/organisation/TROT/sourceofdata/SPORT/horseid/$id")
@@ -23,6 +26,7 @@ class TravsportService(@Qualifier("webClientTravsport") private val webClient: W
             .block()
     }
 
+    @Cacheable("getHorsePedigree")
     fun getHorsePedigree(id: Long): TravsportPedigree? {
         log.info("get horse pedigree for id: $id")
         return webClient.get()
@@ -33,6 +37,7 @@ class TravsportService(@Qualifier("webClientTravsport") private val webClient: W
             .block()
     }
 
+    @Cacheable("getHorseOffspring")
     fun getHorseOffspring(id: Long, genderCode: String): TravsportOffspring? {
         log.info("get horse offspring for id: $id")
         return webClient.get()
