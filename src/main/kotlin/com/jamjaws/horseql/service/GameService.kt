@@ -56,7 +56,7 @@ class GameService(private val webClient: WebClient) {
                             prize = race.prize,
                             terms = race.terms,
                             sport = race.sport,
-                            track = race.track.let { track ->
+                            track = race.track?.let { track ->
                                 Track(
                                     id = track.id,
                                     name = track.name,
@@ -71,7 +71,7 @@ class GameService(private val webClient: WebClient) {
                                     number = start.number,
                                     postPosition = start.postPosition,
                                     distance = start.distance,
-                                    horse = start.horse.let { horse ->
+                                    horse = start.horse?.let { horse ->
                                         Horse(
                                             id = horse.id,
                                             name = horse.name,
@@ -80,10 +80,10 @@ class GameService(private val webClient: WebClient) {
                                             sex = horse.sex,
                                             record = horse.record.let { record ->
                                                 Record(
-                                                    code = record.code,
-                                                    startMethod = record.startMethod,
-                                                    distance = record.distance,
-                                                    time = record.time.let { time ->
+                                                    code = record?.code,
+                                                    startMethod = record?.startMethod,
+                                                    distance = record?.distance,
+                                                    time = record?.time?.let { time ->
                                                         RecordTime(
                                                             time.minutes,
                                                             time.seconds,
@@ -92,7 +92,7 @@ class GameService(private val webClient: WebClient) {
                                                     }
                                                 )
                                             },
-                                            trainer = horse.trainer.let { trainer ->
+                                            trainer = horse.trainer?.let { trainer ->
                                                 Trainer(
                                                     id = trainer.id,
                                                     firstName = trainer.firstName,
@@ -109,20 +109,20 @@ class GameService(private val webClient: WebClient) {
                                             },
                                             shoes = horse.shoes.let { shoes ->
                                                 Shoes(
-                                                    reported = shoes.reported,
-                                                    front = shoes.front.let {
+                                                    reported = shoes?.reported,
+                                                    front = shoes?.front.let {
                                                         ShoesFrontBack(
                                                             it?.hasShoe,
                                                             it?.changed
                                                         )
                                                     },
-                                                    back = shoes.back.let { ShoesFrontBack(it?.hasShoe, it?.changed) }
+                                                    back = shoes?.back.let { ShoesFrontBack(it?.hasShoe, it?.changed) }
                                                 )
                                             },
                                             sulky = horse.sulky.let { sulky ->
                                                 Sulky(
-                                                    reported = sulky.reported,
-                                                    type = sulky.type?.let {
+                                                    reported = sulky?.reported,
+                                                    type = sulky?.type?.let {
                                                         SulkyType(
                                                             code = it.code,
                                                             text = it.text,
@@ -130,7 +130,7 @@ class GameService(private val webClient: WebClient) {
                                                             changed = it.changed,
                                                         )
                                                     },
-                                                    colour = sulky.colour.let {
+                                                    colour = sulky?.colour?.let {
                                                         SulkyColour(
                                                             code = it.code,
                                                             text = it.text,
@@ -142,14 +142,14 @@ class GameService(private val webClient: WebClient) {
                                             },
                                             money = horse.money,
                                             color = horse.color,
-                                            owner = horse.owner.let { owner ->
+                                            owner = horse.owner?.let { owner ->
                                                 Owner(
                                                     id = owner.id,
                                                     name = owner.name,
                                                     location = owner.location,
                                                 )
                                             },
-                                            breeder = horse.breeder.let { breeder ->
+                                            breeder = horse.breeder?.let { breeder ->
                                                 Breeder(
                                                     id = breeder.id,
                                                     name = breeder.name,
@@ -164,7 +164,7 @@ class GameService(private val webClient: WebClient) {
                                             },
                                         )
                                     },
-                                    driver = start.driver.let { driver ->
+                                    driver = start.driver?.let { driver ->
                                         Driver(
                                             id = driver.id,
                                             firstName = driver.firstName,
