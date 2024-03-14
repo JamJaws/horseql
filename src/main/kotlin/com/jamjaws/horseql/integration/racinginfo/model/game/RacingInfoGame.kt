@@ -1,4 +1,4 @@
-package com.jamjaws.horseql.integration.racinginfo.model
+package com.jamjaws.horseql.integration.racinginfo.model.game
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

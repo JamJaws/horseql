@@ -18,7 +18,7 @@ import com.jamjaws.horseql.codegen.types.SulkyColour
 import com.jamjaws.horseql.codegen.types.SulkyType
 import com.jamjaws.horseql.codegen.types.Track
 import com.jamjaws.horseql.codegen.types.Trainer
-import com.jamjaws.horseql.integration.racinginfo.model.RacingInfoGame
+import com.jamjaws.horseql.integration.racinginfo.model.game.RacingInfoGame
 import com.jamjaws.horseql.integration.racinginfo.model.start.RacingInfoStart
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
